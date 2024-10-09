@@ -1,0 +1,9 @@
+INSERT INTO usuario (nombre_user, username, passwd, email) VALUES
+('Juan Pérez', 'juanp', '123456', 'juanp@example.com'),
+('María López', 'marial', 'password', 'marial@example.com'),
+('Carlos García', 'carlg', 'qwerty', 'carlg@example.com'),
+('Ana Torres', 'anator', 'abc123', 'anator@example.com'),
+('Luis Fernández', 'luisf', 'letmein', 'luisf@example.com'),
+('Sofía Martínez', 'sofim', 'welcome', 'sofim@example.com'),
+('Jorge Ramírez', 'jorger', 'admin', 'jorger@example.com'),
+('Laura Jiménez', 'lauraj', 'userpass', 'lauraj@example.com');
