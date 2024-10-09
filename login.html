@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Usuario con jQuery y PHP</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').submit(function(e) {
+                e.preventDefault(); // Evitar el comportamiento normal del formulario
+
+                var usuario = $('#usuario').val();
+                var clave = $('#clave').val();
+
+                // Realizar la solicitud AJAX
+                $.ajax({
+                    url: 'validar_usuario.php',
+                    type: 'POST',
+                    data: {
+                        usuario: usuario,
+                        clave: clave
+                    },
+                    success: function(response) {
+                        // Mostrar el resultado del servidor
+                        if(response==0){
+                            $('#resultado').text("Datos incorrectos");
+                        }
+                        if(response==1){
+                            window.location.href = 'https://www.unam.mx';
+                        }
+                    },
+                    error: function() {
+                        $('#resultado').text('Ocurrió un error al procesar la solicitud.');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+    
+    <form id="loginForm">
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" name="usuario" required><br><br>
+
+        <label for="clave">Clave:</label>
+        <input type="password" id="clave" name="clave" required><br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div id="resultado"></div> <!-- Aquí se mostrará el mensaje de éxito o error -->
+
+
+</body>
+</html>

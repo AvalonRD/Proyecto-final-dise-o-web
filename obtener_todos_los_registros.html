@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Usuarios</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Registros encontrados</h1>
+
+    <!-- Tabla para mostrar los resultados -->
+    <table id="resultados" border="1" style="margin-top: 20px; display: none;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Correo</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <p id="mensaje" style="display: none;">No se encontraron resultados.</p>
+
+    <script>
+        $(document).ready(function () {
+
+            // Enviar la solicitud AJAX
+            $.ajax({
+                url: 'get_all_users.php', // Archivo PHP que hará la búsqueda
+                type: 'POST',
+                data: {},
+                success: function (response) {
+                    // Limpiar la tabla anterior
+                    $("#resultados tbody").empty();
+
+                    // Verificar si hay resultados
+                    if (response) {
+                        // Mostrar la tabla
+                        $("#resultados").show();
+                        $("#mensaje").hide();
+
+                        // Insertar los resultados en la tabla
+                        $("#resultados tbody").append(response);
+                    } else {
+                        // Si no hay resultados, ocultar la tabla
+                        $("#resultados").hide();
+                        $("#mensaje").show();
+                    }
+                }
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

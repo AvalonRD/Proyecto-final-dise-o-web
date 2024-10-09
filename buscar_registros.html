@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Usuarios</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h1>Buscar Usuario</h1>
+
+    <!-- Formulario de búsqueda -->
+    <form id="form-busqueda" method="POST">
+        <label for="nombre">Nombre del usuario:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <!-- Tabla para mostrar los resultados -->
+    <table id="resultados" border="1" style="margin-top: 20px; display: none;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Correo</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <p id="mensaje" style="display: none;">No se encontraron resultados.</p>
+
+    <script>
+        $(document).ready(function() {
+            // Escuchar la acción de envío del formulario
+            $("#form-busqueda").submit(function(e) {
+                e.preventDefault(); // Evitar que el formulario se envíe de manera tradicional
+
+                // Obtener el valor ingresado
+                var nombre = $("#nombre").val();
+
+                // Enviar la solicitud AJAX
+                $.ajax({
+                    url: 'get_users.php', // Archivo PHP que hará la búsqueda
+                    type: 'POST',
+                    data: { nombre: nombre },
+                    success: function(response) {
+                        // Limpiar la tabla anterior
+                        $("#resultados tbody").empty();
+
+                        // Verificar si hay resultados
+                        if (response) {
+                            // Mostrar la tabla
+                            $("#resultados").show();
+                            $("#mensaje").hide();
+
+                            // Insertar los resultados en la tabla
+                            $("#resultados tbody").append(response);
+                        } else {
+                            // Si no hay resultados, ocultar la tabla
+                            $("#resultados").hide();
+                            $("#mensaje").show();
+                        }
+                    }
+                });
+            });   
+    });
+
+    function borrar_registro(id_usuario){
+
+            // Muestra la ventana de confirmación
+            var confirmation = confirm("¿Estás seguro de que deseas eliminar este registro?");
+
+            if (confirmation) {
+                // Si el usuario confirma, procede con la petición Ajax
+                $.ajax({
+                    url: 'deleteUser.php',  // Archivo PHP que maneja la eliminación
+                    type: 'POST',
+                    data: { id_usuario: id_usuario }, // Envía el ID del usuario
+                    success: function(response) {
+                        if (response === 'success') {
+                            alert("Usuario eliminado con éxito.");
+                            // Aquí puedes hacer algo, como recargar la página o actualizar la lista de usuarios
+                            location.reload();
+                        } else {
+                            alert("Error al eliminar el usuario.");
+                        }
+                    },
+                    error: function() {
+                        alert("Ocurrió un error en la solicitud.");
+                    }
+                });
+            } else {
+                // Si el usuario cancela, no se hace nada
+                alert("Eliminación cancelada.");
+            }
+            }
+    </script>
+
+</body>
+</html>
