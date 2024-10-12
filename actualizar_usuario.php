@@ -1,30 +1,45 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET") {
-    $user_id = $_REQUEST["user_id"];
-    $username = $_REQUEST['username'];
-    $passwd = $_REQUEST['passwd'];
-    $nombre_user = $_REQUEST['nombre_user'];
-    $email = $_REQUEST['email'];
-}
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Capturar las variables enviadas por POST
+    $usuario = $_POST['usuario'] ?? '';
+    $clave = $_POST['clave'] ?? '';
+    $nombre = $_POST['nombre'] ?? '';
+    $correo = $_POST['correo'] ?? '';
 
-include('db_config.php');
-$conn = conectarDB();
-$response = array(); // Crear un array para la respuesta
+    // Validar y sanitizar entradas
+    $usuario = filter_var($usuario, FILTER_SANITIZE_STRING);
+    $clave = filter_var($clave, FILTER_SANITIZE_STRING);
+    $nombre = filter_var($nombre, FILTER_SANITIZE_STRING);
+    $correo = filter_var($correo, FILTER_SANITIZE_EMAIL);
 
-if (is_string($conn)) {
-    $response['error'] = $conn; 
-} else {
-    $sql = "UPDATE usuarios SET username='$username', passwd='$passwd', nombre_user='$nombre_user', email='$email' WHERE user_id='$user_id'";
-    
-    if ($conn->query($sql) === TRUE) {
-        $response['success'] = true;
-    } else {
-        $response['error'] = "Error al actualizar el username: " . $conn->error;
+    // Verificar que los campos requeridos no estén vacíos
+    if (empty($usuario) || empty($clave) || empty($nombre) || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        echo 'error: Faltan campos requeridos o el correo es inválido.'; // Respuesta de error si faltan campos
+        exit;
     }
+
+    include('db_config.php');
+    $conn = conectarDB();
+
+    if (is_string($conn)) {
+        echo 'error: No se pudo conectar a la base de datos.'; // Si no se puede conectar a la base de datos
+        exit;
+    }
+
+    $stmt = $conn->prepare("INSERT INTO usuario (nombre_user, username, passwd, email) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $nombre, $usuario, $clave, $correo); // Almacena la contraseña en texto plano
+
+    // Ejecutar la consulta
+    if ($stmt->execute()) {
+        echo 'success'; // Enviar respuesta de éxito a AJAX
+    } else {
+        echo 'error: ' . $stmt->error; // Enviar respuesta de error a AJAX con más información
+        error_log($stmt->error); // Registra el error en el log del servidor para depuración
+    }
+
+    // Cerrar la conexión
+    $stmt->close();
     $conn->close();
-
 }
-
-echo json_encode($response); // Devolver JSON
 ?>

@@ -7,3 +7,5 @@ INSERT INTO usuario (nombre_user, username, passwd, email) VALUES
 ('Sofía Martínez', 'sofim', 'welcome', 'sofim@example.com'),
 ('Jorge Ramírez', 'jorger', 'admin', 'jorger@example.com'),
 ('Laura Jiménez', 'lauraj', 'userpass', 'lauraj@example.com');
+
+

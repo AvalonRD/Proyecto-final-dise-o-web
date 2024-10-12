@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Usuario</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
 
     <h1>Modificar Usuario</h1>
@@ -35,15 +37,22 @@
     <p id="error" style="color: red; display: none;"></p>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Cargar usuario
-            $("#cargar").click(function() {
+            $("#cargar").click(function () {
                 var id_usuario = $("#id_usuario").val();
+
+                // Validar que el ID de usuario sea un número
+                if (!id_usuario || isNaN(id_usuario)) {
+                    $("#error").text("Por favor, ingresa un ID de usuario válido.").show();
+                    return;
+                }
+
                 $.ajax({
                     url: 'cargar_usuario.php',
                     type: 'GET',
                     data: { id_usuario: id_usuario },
-                    success: function(response) {
+                    success: function (response) {
                         var data = JSON.parse(response);
                         if (data.error) {
                             $("#error").text(data.error).show();
@@ -55,12 +64,15 @@
                             $("#form-modificar").show();
                             $("#error").hide();
                         }
+                    },
+                    error: function () {
+                        $("#error").text("Ocurrió un error al cargar el usuario.").show();
                     }
                 });
             });
 
             // Modificar usuario
-            $("#form-modificar").submit(function(e) {
+            $("#form-modificar").submit(function (e) {
                 e.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
                 // Obtener los valores del formulario
@@ -81,7 +93,7 @@
                         nombre: nombre,
                         correo: correo
                     },
-                    success: function(response) {
+                    success: function (response) {
                         var data = JSON.parse(response);
                         if (data.error) {
                             $("#error").text(data.error).show();
@@ -90,6 +102,9 @@
                             $("#mensaje").show();
                             $("#error").hide();
                         }
+                    },
+                    error: function () {
+                        $("#error").text("Ocurrió un error en la solicitud de modificación.").show();
                     }
                 });
             });
@@ -97,4 +112,5 @@
     </script>
 
 </body>
+
 </html>

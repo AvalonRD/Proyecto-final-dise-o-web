@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Usuario</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
 
     <h1>Agregar Nuevo Usuario</h1>
@@ -31,9 +33,9 @@
     <p id="error" style="color: red; display: none;">Ocurrió un error al agregar el usuario.</p>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Manejar la acción de envío del formulario
-            $("#form-agregar").submit(function(e) {
+            $("#form-agregar").submit(function (e) {
                 e.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
                 // Obtener los valores del formulario
@@ -44,7 +46,7 @@
 
                 // Enviar los datos usando AJAX
                 $.ajax({
-                    url: 'agregar_usuario.php',
+                    url: 'agregar_usuario.php', // Asegúrate de que la URL sea correcta
                     type: 'POST',
                     data: {
                         usuario: usuario,
@@ -52,15 +54,15 @@
                         nombre: nombre,
                         correo: correo
                     },
-                    success: function(response) {
+                    success: function (response) {
                         // Limpiar los campos del formulario
                         if (response === 'success') {
-                            $("#form-agregar")[0].reset();
-                            $("#mensaje").show();
-                            $("#error").hide();
+                            $("#form-agregar")[0].reset(); // Reiniciar el formulario
+                            $("#mensaje").show(); // Mostrar mensaje de éxito
+                            $("#error").hide(); // Ocultar mensaje de error
                         } else {
-                            $("#error").show();
-                            $("#mensaje").hide();
+                            $("#error").show(); // Mostrar mensaje de error
+                            $("#mensaje").hide(); // Ocultar mensaje de éxito
                         }
                     }
                 });
@@ -69,4 +71,5 @@
     </script>
 
 </body>
+
 </html>

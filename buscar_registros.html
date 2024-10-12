@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Búsqueda de Usuarios</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
 
     <h1>Buscar Usuario</h1>
@@ -31,11 +33,12 @@
     </table>
 
     <p id="mensaje" style="display: none;">No se encontraron resultados.</p>
+    <p id="error" style="color: red; display: none;"></p> <!-- Mensaje de error -->
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Escuchar la acción de envío del formulario
-            $("#form-busqueda").submit(function(e) {
+            $("#form-busqueda").submit(function (e) {
                 e.preventDefault(); // Evitar que el formulario se envíe de manera tradicional
 
                 // Obtener el valor ingresado
@@ -46,9 +49,10 @@
                     url: 'get_users.php', // Archivo PHP que hará la búsqueda
                     type: 'POST',
                     data: { nombre: nombre },
-                    success: function(response) {
+                    success: function (response) {
                         // Limpiar la tabla anterior
                         $("#resultados tbody").empty();
+                        $("#error").hide(); // Ocultar mensaje de error
 
                         // Verificar si hay resultados
                         if (response) {
@@ -63,13 +67,18 @@
                             $("#resultados").hide();
                             $("#mensaje").show();
                         }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#error").text("Ocurrió un error: " + textStatus + " " + errorThrown);
+                        $("#error").show(); // Mostrar mensaje de error
+                        $("#resultados").hide(); // Ocultar la tabla
+                        $("#mensaje").hide(); // Ocultar el mensaje de no resultados
                     }
                 });
-            });   
-    });
+            });
+        });
 
-    function borrar_registro(id_usuario){
-
+        function borrar_registro(id_usuario) {
             // Muestra la ventana de confirmación
             var confirmation = confirm("¿Estás seguro de que deseas eliminar este registro?");
 
@@ -79,7 +88,7 @@
                     url: 'deleteUser.php',  // Archivo PHP que maneja la eliminación
                     type: 'POST',
                     data: { id_usuario: id_usuario }, // Envía el ID del usuario
-                    success: function(response) {
+                    success: function (response) {
                         if (response === 'success') {
                             alert("Usuario eliminado con éxito.");
                             // Aquí puedes hacer algo, como recargar la página o actualizar la lista de usuarios
@@ -88,7 +97,7 @@
                             alert("Error al eliminar el usuario.");
                         }
                     },
-                    error: function() {
+                    error: function () {
                         alert("Ocurrió un error en la solicitud.");
                     }
                 });
@@ -96,8 +105,9 @@
                 // Si el usuario cancela, no se hace nada
                 alert("Eliminación cancelada.");
             }
-            }
+        }
     </script>
 
 </body>
+
 </html>
