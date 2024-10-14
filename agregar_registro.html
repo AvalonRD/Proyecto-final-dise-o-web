@@ -55,7 +55,8 @@
                         correo: correo
                     },
                     success: function (response) {
-                        // Limpiar los campos del formulario
+                        console.log(response); // Depuración: Ver la respuesta en la consola
+
                         if (response === 'success') {
                             $("#form-agregar")[0].reset(); // Reiniciar el formulario
                             $("#mensaje").show(); // Mostrar mensaje de éxito
