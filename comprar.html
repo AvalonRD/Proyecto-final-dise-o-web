@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprar</title>
-    <!-- Bootstrap CSS -->
+    <!--Bootstrap CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--CSS propio-->
+    <link rel="stylesheet" href="CSS/comprar.css">
     <script>
         function comprarProducto(idProducto, precio) {
             alert("Producto comprado");
-            // Redirigir al archivo agregar_venta.php pasando el id del producto y el precio como parámetros
+            //Redirigir al archivo agregar_venta.php pasando el id del producto y el precio como parámetros
             window.location.href = "agregar_venta.php?id_producto=" + idProducto + "&precio=" + precio;
         }
     </script>
 </head>
 <body>
-    <!-- Menú de navegación -->
+    <!--Menú de navegación-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Abarrotes</a>
@@ -38,7 +40,7 @@
         </div>
     </nav>
 
-    <!-- Tabla de productos -->
+    <!--Tabla de productos-->
     <div class="container my-4">
         <table class="table table-bordered">
             <thead class="table-light">
@@ -78,12 +80,12 @@
         </table>
     </div>
 
-    <!-- Pie de página -->
+    <!--Pie de página-->
     <footer class="bg-light text-center py-3">
         <p>Versión 1.0 | Abarrotes © 2024</p>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!--Bootstrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
