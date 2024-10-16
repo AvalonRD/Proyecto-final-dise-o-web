@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function comprarProducto(idProducto, precio) {
+            alert("Producto comprado");
+            // Redirigir al archivo agregar_venta.php pasando el id del producto y el precio como parámetros
+            window.location.href = "agregar_venta.php?id_producto=" + idProducto + "&precio=" + precio;
+        }
+    </script>
+</head>
+<body>
+    <!-- Menú de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Abarrotes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Iniciar Usuario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Comprar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Carrito</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tabla de productos -->
+    <div class="container my-4">
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre del Producto</th>
+                    <th>Precio</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="file" name="foto1"></td>
+                    <td>Producto 1</td>
+                    <td>$10.00</td>
+                    <td><button class="btn btn-primary" onclick="comprarProducto(1, 10.00)">Comprar</button></td>
+                </tr>
+                <tr>
+                    <td><input type="file" name="foto2"></td>
+                    <td>Producto 2</td>
+                    <td>$20.00</td>
+                    <td><button class="btn btn-primary" onclick="comprarProducto(2, 20.00)">Comprar</button></td>
+                </tr>
+                <tr>
+                    <td><input type="file" name="foto3"></td>
+                    <td>Producto 3</td>
+                    <td>$30.00</td>
+                    <td><button class="btn btn-primary" onclick="comprarProducto(3, 30.00)">Comprar</button></td>
+                </tr>
+                <tr>
+                    <td><input type="file" name="foto4"></td>
+                    <td>Producto 4</td>
+                    <td>$40.00</td>
+                    <td><button class="btn btn-primary" onclick="comprarProducto(4, 40.00)">Comprar</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-light text-center py-3">
+        <p>Versión 1.0 | Abarrotes © 2024</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

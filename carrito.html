@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+
+    <!-- Enlace a una hoja de estilos para mayor presentación -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px #2c3e50;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        td:hover {
+            background-color: #ecf0f1;
+        }
+
+        p#mensaje {
+            text-align: center;
+            color: #e74c3c;
+            font-size: 18px;
+        }
+
+        /* Estilo para el mensaje de no resultados */
+        p#mensaje {
+            display: none;
+        }
+
+        h3{ 
+            text-align: center;
+            color: #373668;
+            padding: 0%;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+        }
+    </style>
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h1>Registros Encontrados</h1>
+
+    <!-- Tabla para mostrar los resultados -->
+    <table id="resultados" style="display: none;">
+        <h3>Carrito</h3>
+        <thead>
+            <tr>
+                <th>id_producto</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <p id="mensaje">No se encontraron resultados.</p>
+
+    <!-- Script de AJAX para cargar los resultados -->
+    <script>
+        $(document).ready(function() {
+            // Enviar la solicitud AJAX
+            $.ajax({
+                url: 'get_all_users.php', // Archivo PHP que hará la búsqueda
+                type: 'POST',
+                success: function(response) {
+                    // Limpiar la tabla anterior
+                    $("#resultados tbody").empty();
+
+                    // Verificar si hay resultados
+                    if (response) {
+                        // Mostrar la tabla
+                        $("#resultados").show();
+                        $("#mensaje").hide();
+
+                        // Insertar los resultados en la tabla
+                        $("#resultados tbody").append(response);
+                    } else {
+                        // Si no hay resultados, ocultar la tabla
+                        $("#resultados").hide();
+                        $("#mensaje").show();
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
