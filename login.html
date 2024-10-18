@@ -24,7 +24,10 @@
                     success: function(response) {
                         // Mostrar el resultado del servidor
                         if(response==0){
-                            $('#resultado').text("Datos incorrectos");
+                            $('#resultado').text("Datos incorrectos").append('<br><button id="crearCuenta">Crear cuenta</button>');
+                            $('#crearCuenta').click(function() {
+                                window.location.href = 'agregar_registro.html'; //Aparece la oprotunidad de crear un usuario, por si no la tiene creada aun
+                            });
                         }
                         if(response==1){
                             window.location.href = 'https://www.unam.mx';
