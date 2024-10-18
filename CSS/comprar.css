@@ -56,9 +56,12 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
-.table td input[type="file"] {
+.product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
     display: block;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .btn-primary {
