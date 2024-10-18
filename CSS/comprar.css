@@ -87,3 +87,14 @@ footer p {
     padding: 10px;
     color: #777;
 }
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.small-image {
+    width: 80px;  /* Ajusta el tamaño de la imagen si es necesario */
+    height: auto;
+}
