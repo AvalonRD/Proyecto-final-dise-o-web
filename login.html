@@ -29,12 +29,23 @@
                     },
                     success: function (response) {
                         // Mostrar el resultado del servidor
+<<<<<<< HEAD
                         if (response == 0) {
                             $('#resultado').text("Datos incorrectos");
                         } else if (response == 1) {
                             window.location.href = 'dashboard.php'; // Redireccionar al panel de administración
                         } else if (response == 2) {
                             window.location.href = 'index.html'; // Redireccionar al menú de cliente
+=======
+                        if(response==0){
+                            $('#resultado').text("Datos incorrectos").append('<br><button id="crearCuenta">Crear cuenta</button>');
+                            $('#crearCuenta').click(function() {
+                                window.location.href = 'agregar_registro.html'; //Aparece la oprotunidad de crear un usuario, por si no la tiene creada aun
+                            });
+                        }
+                        if(response==1){
+                            window.location.href = 'https://www.unam.mx';
+>>>>>>> 45b3a9aae218ad53b3c6292c985c12137bf13ec2
                         }
                     },
                     error: function () {
