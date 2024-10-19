@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET") {
-    // Capturar la variable 'nombre' enviada por POST o GET
-    $nombre = $_REQUEST["nombre"] ?? '';
+    // Capturar la variable 'username' enviada por POST o GET
+    $username = $_REQUEST["username"] ?? ''; // Cambié 'nombre' por 'username'
 
     // Usar include_once para evitar problemas de redeclaración
     include_once('db_config.php');
@@ -12,17 +12,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
         exit;
     }
 
-    // Sanitizar la entrada del nombre
-    $nombre = htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8');
+    // Sanitizar la entrada del username
+    $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
 
-    // Verificar que el nombre no esté vacío
-    if (empty($nombre)) {
-        echo json_encode(['error' => 'Por favor, ingresa un nombre.']);
+    // Verificar que el username no esté vacío
+    if (empty($username)) {
+        echo json_encode(['error' => 'Por favor, ingresa un nombre de usuario.']);
         exit;
     }
 
     // Definir la consulta
-    $sql = "SELECT user_id, nombre_user AS nombre, username AS usuario, email AS correo FROM usuario WHERE nombre_user LIKE ?";
+    $sql = "SELECT clt_id AS id_cliente, name_clt AS nombre, username AS usuario, email_clt AS correo, phone_clt AS telefono, address_clt AS direccion FROM client WHERE username LIKE ?";
     $stmt = $conn->prepare($sql);
     
     if ($stmt === false) {
@@ -30,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
         exit;
     }
 
-    $like_nombre = "%$nombre%";
-    $stmt->bind_param("s", $like_nombre);
+    $like_username = "%$username%";
+    $stmt->bind_param("s", $like_username);
 
     // Ejecutar la consulta
     if ($stmt->execute()) {
@@ -42,18 +42,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
             // Construir las filas de la tabla con los resultados
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                        <td>" . htmlspecialchars($row['user_id']) . "</td>
+                        <td>" . htmlspecialchars($row['id_cliente']) . "</td>
                         <td>" . htmlspecialchars($row['nombre']) . "</td>
                         <td>" . htmlspecialchars($row['usuario']) . "</td>
                         <td>" . htmlspecialchars($row['correo']) . "</td>
+                        <td>" . htmlspecialchars($row['telefono']) . "</td>
+                        <td>" . htmlspecialchars($row['direccion']) . "</td>
                         <td>
-                            <form name='form-modificar' action='modificar_regitro.php' method='POST'>
-                                <input type='hidden' name='id_usuario' value='" . htmlspecialchars($row['user_id']) . "'>
+                            <form name='form-modificar' action='modificar_registro.php' method='POST'>
+                                <input type='hidden' name='id_usuario' value='" . htmlspecialchars($row['id_cliente']) . "'>
                                 <input type='submit' value='Modificar'>
                             </form>
                         </td>
                         <td>
-                            <button onclick='borrar_registro(" . htmlspecialchars($row['user_id']) . ")'>Borrar</button>
+                            <button onclick='borrar_registro(" . htmlspecialchars($row['id_cliente']) . ")'>Borrar</button>
                         </td>
                     </tr>";
             }

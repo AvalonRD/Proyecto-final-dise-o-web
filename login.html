@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificación de Usuario con jQuery y PHP</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#loginForm').submit(function(e) {
+        $(document).ready(function () {
+            // Leer el tipo de usuario desde la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const tipoUsuario = urlParams.get('tipo');
+
+            $('#loginForm').submit(function (e) {
                 e.preventDefault(); // Evitar el comportamiento normal del formulario
 
                 var usuario = $('#usuario').val();
@@ -19,18 +24,20 @@
                     type: 'POST',
                     data: {
                         usuario: usuario,
-                        clave: clave
+                        clave: clave,
+                        tipo: tipoUsuario // Enviar el tipo de usuario
                     },
-                    success: function(response) {
+                    success: function (response) {
                         // Mostrar el resultado del servidor
-                        if(response==0){
+                        if (response == 0) {
                             $('#resultado').text("Datos incorrectos");
-                        }
-                        if(response==1){
-                            window.location.href = 'https://www.unam.mx';
+                        } else if (response == 1) {
+                            window.location.href = 'dashboard.php'; // Redireccionar al panel de administración
+                        } else if (response == 2) {
+                            window.location.href = 'index.html'; // Redireccionar al menú de cliente
                         }
                     },
-                    error: function() {
+                    error: function () {
                         $('#resultado').text('Ocurrió un error al procesar la solicitud.');
                     }
                 });
@@ -38,9 +45,10 @@
         });
     </script>
 </head>
+
 <body>
     <h1>Iniciar Sesión</h1>
-    
+
     <form id="loginForm">
         <label for="usuario">Usuario:</label>
         <input type="text" id="usuario" name="usuario" required><br><br>
@@ -52,7 +60,6 @@
     </form>
 
     <div id="resultado"></div> <!-- Aquí se mostrará el mensaje de éxito o error -->
-
-
 </body>
+
 </html>

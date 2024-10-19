@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Capturar el ID de usuario
-    $id_usuario = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
+    // Capturar el ID de cliente
+    $id_cliente = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
 
     include('db_config.php');
     $conn = conectarDB();
@@ -12,22 +12,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 
     // Verificar que el ID no esté vacío y sea numérico
-    if (empty($id_usuario) || !is_numeric($id_usuario)) {
-        echo json_encode(['error' => 'ID de usuario inválido']);
+    if (empty($id_cliente) || !is_numeric($id_cliente)) {
+        echo json_encode(['error' => 'ID de cliente inválido']);
         exit;
     }
 
-    // Consultar el usuario
-    $stmt = $conn->prepare("SELECT * FROM usuario WHERE user_id = ?");
-    $stmt->bind_param("i", $id_usuario);
+    // Consultar el cliente
+    $stmt = $conn->prepare("SELECT * FROM client WHERE clt_id = ?");
+    $stmt->bind_param("i", $id_cliente);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $usuario_data = $result->fetch_assoc();
-        echo json_encode($usuario_data);
+        $cliente_data = $result->fetch_assoc();
+        echo json_encode($cliente_data);
     } else {
-        echo json_encode(['error' => 'Usuario no encontrado']);
+        echo json_encode(['error' => 'Cliente no encontrado']);
     }
 
     $stmt->close();

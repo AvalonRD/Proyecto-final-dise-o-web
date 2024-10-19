@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito</title>
     <link rel="stylesheet" href="CSS/carrito.css">
-    <!--jQuery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
 
-    <h1>Registros Encontrados</h1>
+    <h1>Carrito de Compras</h1>
 
-    <!-- Tabla para mostrar los resultados -->
+    <!-- Mensaje cuando no hay resultados -->
+    <p id="mensaje" style="color: red; display: none;">No se encontraron resultados.</p>
+
+    <!-- Tabla para mostrar los productos en el carrito -->
     <table id="resultados" style="display: none;">
-        <h3>Carrito</h3>
         <thead>
             <tr>
-                <th>id_producto</th>
+                <th>ID Producto</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
 
-    <!-- Mensaje cuando no hay resultados -->
-    <p id="mensaje">No se encontraron resultados.</p>
-
-    <!-- Script de AJAX para cargar los resultados -->
+    <!-- Script de AJAX para cargar los productos en el carrito -->
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Enviar la solicitud AJAX
             $.ajax({
-                url: 'get_all_users.php', // Archivo PHP que hará la búsqueda
+                url: 'get_cart_items.php', // Cambia a tu archivo PHP que maneja el carrito
                 type: 'POST',
-                success: function(response) {
+                success: function (response) {
                     // Limpiar la tabla anterior
                     $("#resultados tbody").empty();
 
@@ -53,10 +54,14 @@
                         $("#resultados").hide();
                         $("#mensaje").show();
                     }
+                },
+                error: function () {
+                    $("#mensaje").text("Ocurrió un error al cargar el carrito.").show();
                 }
             });
         });
     </script>
 
 </body>
+
 </html>

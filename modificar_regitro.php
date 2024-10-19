@@ -1,5 +1,4 @@
 <?php
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET") {
     // Capturar las variables enviadas por POST o GET
     $id_usuario = $_REQUEST["id_usuario"] ?? '';
@@ -58,10 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
                         if (data.error) {
                             $("#error").text(data.error).show();
                         } else {
-                            $("#usuario").val(data.usuario);
-                            $("#clave").val(data.clave);
-                            $("#nombre").val(data.nombre);
-                            $("#correo").val(data.correo);
+                            $("#usuario").val(data.username); // Cambiado a username
+                            $("#clave").val(data.passwd_clt); // Cambiado a passwd_clt
+                            $("#nombre").val(data.name_clt); // Cambiado a name_clt
+                            $("#correo").val(data.email_clt); // Cambiado a email_clt
                             $("#form-modificar").show();
                             $("#error").hide();
                         }
@@ -77,10 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
 
                 // Obtener los valores del formulario
                 var id_usuario = $("#id_usuario").val();
-                var usuario = $("#usuario").val();
-                var clave = $("#clave").val();
-                var nombre = $("#nombre").val();
-                var correo = $("#correo").val();
+                var username = $("#usuario").val(); // Cambiado a username
+                var passwd_clt = $("#clave").val(); // Cambiado a passwd_clt
+                var name_clt = $("#nombre").val(); // Cambiado a name_clt
+                var email_clt = $("#correo").val(); // Cambiado a email_clt
 
                 // Enviar los datos usando AJAX
                 $.ajax({
@@ -88,10 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
                     type: 'POST',
                     data: {
                         id_usuario: id_usuario,
-                        usuario: usuario,
-                        clave: clave,
-                        nombre: nombre,
-                        correo: correo
+                        username: username, // Cambiado a username
+                        passwd_clt: passwd_clt, // Cambiado a passwd_clt
+                        name_clt: name_clt, // Cambiado a name_clt
+                        email_clt: email_clt // Cambiado a email_clt
                     },
                     success: function(response) {
                         var data;

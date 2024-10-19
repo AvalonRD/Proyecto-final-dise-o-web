@@ -12,8 +12,11 @@ function conectarDB() {
 
     // Verificar si hay errores en la conexión
     if ($conn->connect_error) {
-        return "Error de conexión: " . $conn->connect_error;
+        throw new Exception("Error de conexión: " . $conn->connect_error);
     }
+
+    // Configurar el conjunto de caracteres
+    $conn->set_charset("utf8");
 
     // Retornar la conexión si es exitosa
     return $conn;

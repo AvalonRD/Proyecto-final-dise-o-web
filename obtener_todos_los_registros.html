@@ -17,8 +17,11 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Username</th>
+                <th>Usuario</th>
+                <th>Contraseña</th>
                 <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -33,24 +36,41 @@
             $.ajax({
                 url: 'get_all_users.php', // Archivo PHP que hará la búsqueda
                 type: 'POST',
-                data: {},
+                data: {}, // Si necesitas pasar algún dato, agrégalo aquí
                 success: function (response) {
                     // Limpiar la tabla anterior
                     $("#resultados tbody").empty();
 
                     // Verificar si hay resultados
                     if (response) {
+                        // Suponiendo que `response` es un JSON que contiene un arreglo de usuarios
+                        var usuarios = JSON.parse(response);
+
                         // Mostrar la tabla
                         $("#resultados").show();
                         $("#mensaje").hide();
 
                         // Insertar los resultados en la tabla
-                        $("#resultados tbody").append(response);
+                        usuarios.forEach(function (usuario) {
+                            $("#resultados tbody").append(`
+                                <tr>
+                                    <td>${usuario.clt_id}</td>
+                                    <td>${usuario.username}</td>
+                                    <td>${usuario.passwd_clt}</td> <!-- Contraseña -->
+                                    <td>${usuario.email_clt}</td>
+                                    <td>${usuario.phone_clt}</td> <!-- Teléfono -->
+                                    <td>${usuario.address_clt}</td> <!-- Dirección -->
+                                </tr>
+                            `);
+                        });
                     } else {
                         // Si no hay resultados, ocultar la tabla
                         $("#resultados").hide();
                         $("#mensaje").show();
                     }
+                },
+                error: function () {
+                    $("#mensaje").text("Ocurrió un error al buscar los usuarios.").show();
                 }
             });
 
