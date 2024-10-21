@@ -32,32 +32,32 @@ INSERT INTO product (
         image_url
     )
 VALUES (
-        'Arroz',
-        'Paquete de 1 kg de arroz',
-        20.50,
+        'Galletas',
+        'Caja de dos paquetes de galletas con chispas con chocolate',
+        10.00,
         100,
-        'arroz.jpg' -- actualizar url
+        'galletas.jpg' -- actualizar url
     ),
     (
-        'Frijoles',
-        'Paquete de 1 kg de frijoles',
-        25.00,
+        'Jamon',
+        'Paquete de 1 kg de jamon de pavo',
+        20.00,
         80,
-        'frijoles.jpg' -- atualizar url
+        'jamon.jpg' -- atualizar url
     ),
     (
-        'Aceite',
-        'Botella de 1 litro de aceite vegetal',
+        'Leche',
+        'Botella de 1 litro de leche entera de vaca',
         30.00,
         50,
-        'aceite.jpg'
+        'Leche-esta-es-la-mas-saludable-que-puedes-consumir.jpg'
     ),
     (
-        'Azúcar',
-        'Paquete de 1 kg de azúcar',
-        18.00,
+        'Papas',
+        'Bolsa de papas de 100 gr',
+        40.00,
         70,
-        'azucar.jpg'
+        'papas.jpg'
     );
 -- Inserciones para la tabla admin
 INSERT INTO admin (user_adm, passwd_adm)

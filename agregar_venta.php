@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db_config.php');
+include('db_config.php'); // Asegúrate de que este archivo existe y conecta correctamente
 $conn = conectarDB();
 
 if (is_string($conn)) {
@@ -69,7 +69,7 @@ if (isset($_GET['id_producto']) && isset($_GET['precio'])) {
             }
         } else {
             // No hay inventario
-            header("Location: error_inventario.php"); 
+            header("Location: error_inventario.php");
             exit;
         }
     } else {
